@@ -26,6 +26,18 @@ namespace Bdiebeak.InterfaceGenerator
             {
                 Debug.Log($"{inputAction.name} | {inputAction.type} | {control.valueType.Name}");
             }
+            
+            // =======================================================
+            // How to get Generic argument from InputController - inconvenient. Just for git.
+            // =======================================================
+            // var axisType = typeof(AxisControl).BaseType;
+            // if (axisType.IsGenericType)
+            // {
+            //     Debug.Log("Generic");
+            //
+            //     var arguments = axisType.GetGenericArguments();
+            //     Debug.Log($"Type argument ({arguments[0]})");
+            // }
 
             return _typeToSuitable.ContainsKey(loweredControlType) ? _typeToSuitable[loweredControlType] : string.Empty;
         }

@@ -5,16 +5,16 @@ public class TestController : MonoBehaviour
 {
     public void OnMove(InputValue value)
     {
-        Debug.Log($"On Move {value.Get<Vector2>()}");
+        //Debug.Log($"On Move {value.Get<Vector2>()}");
     }
 
     public void OnFire(InputValue value)
     {
-        // Debug.Log("Fire");
+        Debug.Log($"On Fire {value.isPressed}");
     }
-
-    private void Update()
+    
+    public void OnAxis(InputValue value)
     {
-        if (Keyboard.current.aKey.isPressed) Debug.Log("A");
+        Debug.Log($"On Axis {value.Get<float>()}");
     }
 }

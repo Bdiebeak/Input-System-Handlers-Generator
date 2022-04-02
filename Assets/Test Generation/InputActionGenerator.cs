@@ -20,10 +20,10 @@ namespace Bdiebeak.InterfaceGenerator
                 return;
             }
 
+            // ToDo: open folder to save separated interface for each action map (Player, UI and etc.)
             var outputPath = EditorUtility.SaveFilePanelInProject("Save location", "InputSystemInterface", "cs", "Where do you want to save.");
 
-            var generator = new InputSystemInterfaceGenerator();
-
+            var generator = new PropertiesInterfaceGenerator();
             generator.Session = new Dictionary<string, object>();
 
             var interfaceName = Path.GetFileNameWithoutExtension(outputPath);
@@ -31,9 +31,16 @@ namespace Bdiebeak.InterfaceGenerator
 
             var actions = new Dictionary<string, string>();
             foreach (var map in inputActionAsset.actionMaps)
+            {
                 foreach (var action in map.actions)
-                    actions.Add(action.name, action.expectedControlType);
-            
+                {
+                    var suitableType = action.ConvertToSuitableType();
+                    if (string.IsNullOrEmpty(suitableType)) continue;
+                    
+                    actions.Add(action.name, suitableType);
+                }
+            }
+
             generator.Session["actions"] = actions;
             generator.Initialize();
 

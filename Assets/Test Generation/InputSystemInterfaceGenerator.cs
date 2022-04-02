@@ -15,13 +15,16 @@ namespace Bdiebeak.InterfaceGenerator
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class InputSystemInterfaceGenerator : InputSystemInterfaceGeneratorBase
+    public partial class PropertiesInterfaceGenerator : PropertiesInterfaceGeneratorBase
     {
         /// <summary>
         /// Create the template output
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("using UnityEngine;");
+            this.Write("\r\n\r\n");
+            
             this.Write("public interface ");
             this.Write(this.ToStringHelper.ToStringWithCulture(interfaceName));
             this.Write("\r\n");
@@ -128,7 +131,7 @@ namespace Bdiebeak.InterfaceGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class InputSystemInterfaceGeneratorBase
+    public class PropertiesInterfaceGeneratorBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

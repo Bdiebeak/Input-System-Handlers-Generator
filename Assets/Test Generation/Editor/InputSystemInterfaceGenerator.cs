@@ -44,6 +44,7 @@ namespace Bdiebeak.InterfaceGenerator
                     #line hidden
                     this.Write(" ");
                     this.Write(this.ToStringHelper.ToStringWithCulture(action.Key));
+                    this.Write("Value");
                     
                     #line default
                     #line hidden

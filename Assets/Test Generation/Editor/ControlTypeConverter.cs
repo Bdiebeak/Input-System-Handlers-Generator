@@ -11,33 +11,22 @@ namespace Bdiebeak.InterfaceGenerator
         // ToDo: extract this dictionary into some Scriptable object settings file.
         private static Dictionary<string, string> _typeToSuitable = new Dictionary<string, string>()
         {
-            {"button", "bool"},
+            {"analog", "float"},
             {"axis", "float"},
-            {nameof(Vector2).ToLower(), nameof(Vector2)},
-            {nameof(Vector3).ToLower(), nameof(Vector3)},
+            {"button", "bool"},
+            {"digital", "int"},
+            {"dpad", "Vector2"},
+            {"integer", "int"},
+            {"quaternion", "Quaternion"},
+            {"stick", "Vector2"},
+            {"vector2", "Vector2"},
+            {"vector3", "Vector3"},
         };
 
         public static string ConvertToSuitableType(this InputAction inputAction)
         {
             var controlType = inputAction.expectedControlType;
             var loweredControlType = controlType.ToLower();
-
-            foreach (var control in inputAction.controls)
-            {
-                Debug.Log($"{inputAction.name} | {inputAction.type} | {control.valueType.Name}");
-            }
-            
-            // =======================================================
-            // How to get Generic argument from InputController - inconvenient. Just for git.
-            // =======================================================
-            // var axisType = typeof(AxisControl).BaseType;
-            // if (axisType.IsGenericType)
-            // {
-            //     Debug.Log("Generic");
-            //
-            //     var arguments = axisType.GetGenericArguments();
-            //     Debug.Log($"Type argument ({arguments[0]})");
-            // }
 
             return _typeToSuitable.ContainsKey(loweredControlType) ? _typeToSuitable[loweredControlType] : string.Empty;
         }

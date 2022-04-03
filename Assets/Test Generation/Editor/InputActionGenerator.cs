@@ -8,10 +8,13 @@ namespace Bdiebeak.InterfaceGenerator
 {
     public class InputActionGenerator
     {
-        private const string MenuItemPath = "Assets/Bdiebeak/Input System/Generate Interfaces";
+        private const string MenuItemPath = "Assets/Bdiebeak/Input System/Generate Input Scripts";
 
+        [MenuItem(MenuItemPath, true)]
+        private static bool GenerateInterfacesMenuValidation() => Selection.activeObject.GetType() == typeof(InputActionAsset);
+        
         [MenuItem(MenuItemPath)]
-        private static void DoSomething()
+        private static void GenerateInterfaces()
         {
             var inputActionAsset = Selection.activeObject as InputActionAsset;
             if (inputActionAsset == null)
@@ -20,37 +23,39 @@ namespace Bdiebeak.InterfaceGenerator
                 return;
             }
 
-            // ToDo: open folder to save separated interface for each action map (Player, UI and etc.)
-            var outputPath = EditorUtility.SaveFilePanelInProject("Save location", "InputSystemInterface", "cs", "Where do you want to save.");
+            var selectedFolderPath = EditorUtility.OpenFolderPanel("Save location", "InputSystemInterface", "");
+            foreach (var map in inputActionAsset.actionMaps) GenerateInterfaceFromActionMap(map, selectedFolderPath);
 
-            var generator = new PropertiesInterfaceGenerator();
-            generator.Session = new Dictionary<string, object>();
-
-            var interfaceName = Path.GetFileNameWithoutExtension(outputPath);
-            generator.Session["interfaceName"] = $"I{interfaceName}";
-
-            var actions = new Dictionary<string, string>();
-            foreach (var map in inputActionAsset.actionMaps)
-            {
-                foreach (var action in map.actions)
-                {
-                    var suitableType = action.ConvertToSuitableType();
-                    if (string.IsNullOrEmpty(suitableType)) continue;
-                    
-                    actions.Add(action.name, suitableType);
-                }
-            }
-
-            generator.Session["actions"] = actions;
-            generator.Initialize();
-
-            var generated = generator.TransformText();
-
-            File.WriteAllText(outputPath, generated);
             AssetDatabase.Refresh();
         }
 
-        [MenuItem(MenuItemPath, true)]
-        private static bool DoSomethingValidation() => Selection.activeObject.GetType() == typeof(InputActionAsset);
+        private static void GenerateInterfaceFromActionMap(InputActionMap actionMap, string folderPath)
+        {
+            var mapName = actionMap.name;
+            var interfaceName = $"I{mapName}InputActions";
+                
+            var generator = new PropertiesInterfaceGenerator { Session = new Dictionary<string, object>() };
+            generator.Session["interfaceName"] = interfaceName;
+
+            // Fill actions from map
+            var actions = new Dictionary<string, string>();
+            foreach (var action in actionMap.actions)
+            {
+                var suitableType = action.ConvertToSuitableType();
+                if (string.IsNullOrEmpty(suitableType)) continue;
+                    
+                actions.Add(action.name, suitableType);
+            }
+            generator.Session["actions"] = actions;
+            generator.Initialize();
+
+            // Create directory
+            var directoryPath = $"{folderPath}/{mapName}";
+            Directory.CreateDirectory(directoryPath);
+            
+            // Create and write text inside file
+            var filePath = $"{directoryPath}/{interfaceName}.cs";
+            File.WriteAllText(filePath, generator.TransformText());
+        }
     }
 }

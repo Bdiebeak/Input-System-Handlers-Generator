@@ -6,7 +6,7 @@ namespace Bdiebeak.InterfaceGenerator
 {
     public static class ControlTypeConverter
     {
-        // In Input system package we have inconvenient for type determination code.
+        // In Input system package we have inconvenient type determination code.
         // It's even uncomfortable for C# Reflection. So this dictionary is the most convenient solution in my opinion.
         // ToDo: extract this dictionary into some Scriptable object settings file.
         private static Dictionary<string, string> _typeToSuitable = new Dictionary<string, string>()
@@ -28,7 +28,8 @@ namespace Bdiebeak.InterfaceGenerator
             var controlType = inputAction.expectedControlType;
             var loweredControlType = controlType.ToLower();
 
-            return _typeToSuitable.ContainsKey(loweredControlType) ? _typeToSuitable[loweredControlType] : string.Empty;
+            return _typeToSuitable.ContainsKey(loweredControlType) ? _typeToSuitable[loweredControlType] 
+                                                                   : string.Empty;
         }
     }
 }

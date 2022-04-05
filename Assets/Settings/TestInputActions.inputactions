@@ -360,6 +360,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "844240be-349c-46d0-bae7-56ddc23df5ef",
+            "actions": [
+                {
+                    "name": "Touch",
+                    "type": "Button",
+                    "id": "f6d0641c-a79c-4cc5-b077-2b39a9bec209",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d7c1b144-c276-434e-b497-60c6f3985503",
+                    "path": "<Touchscreen>/touch0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

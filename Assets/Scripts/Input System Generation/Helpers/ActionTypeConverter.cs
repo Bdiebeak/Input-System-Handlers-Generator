@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Bdiebeak.InterfaceGenerator
+namespace Bdiebeak.InputSystemGeneration
 {
-    public static class ControlTypeConverter
+    public static class ActionTypeConverter
     {
         // In Input system package we have inconvenient type determination code.
         // It's even uncomfortable for C# Reflection. So this dictionary is the most convenient solution in my opinion.

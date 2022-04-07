@@ -7,46 +7,87 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace Bdiebeak.InterfaceGenerator
+namespace Bdiebeak.InputSystemGeneration
 {
+    using System.Text;
+    using System.Collections.Generic;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class PropertiesInterfaceGenerator : PropertiesInterfaceGeneratorBase
+    public partial class InputHandlerClassTemplate : InputHandlerClassTemplateBase
     {
         /// <summary>
         /// Create the template output
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using UnityEngine;");
+            this.Write("using UnityEngine;\r\nusing UnityEngine.InputSystem;");
             this.Write("\r\n\r\n");
-            
-            this.Write("public interface ");
+            this.Write("[RequireComponent(typeof(PlayerInput))]\r\n");
+            this.Write("public class ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            this.Write(" : MonoBehaviour, ");
             this.Write(this.ToStringHelper.ToStringWithCulture(interfaceName));
-            this.Write("\r\n");
+            this.Write(" \r\n{\r\n");
             
-            this.Write("{\r\n");
+            foreach (var action in actions)
+            {
+                this.Write("    public ");
+                this.Write(this.ToStringHelper.ToStringWithCulture(action.Value));
+                    
+                this.Write(" ");
+                this.Write(this.ToStringHelper.ToStringWithCulture(action.Key));
+                this.Write("Value");
+                    
+                this.Write(" {get; set;}\r\n");
+            }
+            this.Write("\r\n");
 
             foreach (var action in actions)
             {
-                    this.Write("    public ");
+                this.Write("    private void On");
+                this.Write(this.ToStringHelper.ToStringWithCulture(action.Key));
+                this.Write("(InputValue value)\r\n    {\r\n");
+            
+                this.Write("        ");
+                this.Write(this.ToStringHelper.ToStringWithCulture(action.Key));
+                this.Write("Value");
+                
+                if (action.Value == "bool")
+                {
+                    this.Write(" = value.isPressed;\r\n");
+                }
+                else
+                {
+                    this.Write(" = value.Get<");
                     this.Write(this.ToStringHelper.ToStringWithCulture(action.Value));
-                    
-                    this.Write(" ");
-                    this.Write(this.ToStringHelper.ToStringWithCulture(action.Key));
-                    this.Write("Value");
-                    
-                    this.Write(" {get; set;}\r\n");
+                    this.Write(">();\r\n");
+                }
+                
+                this.Write("    }");
+                this.Write("\r\n\r\n");
             }
-    
+            
             this.Write("}\r\n");
             return this.GenerationEnvironment.ToString();
         }
 
+        private string _classNameField;
+        
+        /// <summary>
+        /// Access the className parameter of the template.
+        /// </summary>
+        private string className
+        {
+            get
+            {
+                return this._classNameField;
+            }
+        }
+        
         private string _interfaceNameField;
         
         /// <summary>
@@ -60,12 +101,12 @@ namespace Bdiebeak.InterfaceGenerator
             }
         }
         
-        private global::System.Collections.Generic.Dictionary<System.String, System.String> _actionsField;
+        private global::System.Collections.Generic.Dictionary<string, string> _actionsField;
         
         /// <summary>
         /// Access the actions parameter of the template.
         /// </summary>
-        private global::System.Collections.Generic.Dictionary<System.String, System.String> actions
+        private global::System.Collections.Generic.Dictionary<string, string> actions
         {
             get
             {
@@ -81,12 +122,29 @@ namespace Bdiebeak.InterfaceGenerator
         {
             if ((this.Errors.HasErrors == false))
             {
+                bool classNameValueAcquired = false;
+                if (this.Session.ContainsKey("className"))
+                {
+                    this._classNameField = ((string)(this.Session["className"]));
+                    classNameValueAcquired = true;
+                }
+                
+                if ((classNameValueAcquired == false))
+                {
+                    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("className");
+                    if ((data != null))
+                    {
+                        this._classNameField = ((string)(data));
+                    }
+                }
+                
                 bool interfaceNameValueAcquired = false;
                 if (this.Session.ContainsKey("interfaceName"))
                 {
                     this._interfaceNameField = ((string)(this.Session["interfaceName"]));
                     interfaceNameValueAcquired = true;
                 }
+                
                 if ((interfaceNameValueAcquired == false))
                 {
                     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("interfaceName");
@@ -95,18 +153,20 @@ namespace Bdiebeak.InterfaceGenerator
                         this._interfaceNameField = ((string)(data));
                     }
                 }
+                
                 bool actionsValueAcquired = false;
                 if (this.Session.ContainsKey("actions"))
                 {
-                    this._actionsField = ((global::System.Collections.Generic.Dictionary<System.String, System.String>)(this.Session["actions"]));
+                    this._actionsField = ((global::System.Collections.Generic.Dictionary<string, string>)(this.Session["actions"]));
                     actionsValueAcquired = true;
                 }
+                
                 if ((actionsValueAcquired == false))
                 {
                     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("actions");
                     if ((data != null))
                     {
-                        this._actionsField = ((global::System.Collections.Generic.Dictionary<System.String, System.String>)(data));
+                        this._actionsField = ((global::System.Collections.Generic.Dictionary<string, string>)(data));
                     }
                 }
             }
@@ -118,7 +178,7 @@ namespace Bdiebeak.InterfaceGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class PropertiesInterfaceGeneratorBase
+    public class InputHandlerClassTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

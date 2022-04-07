@@ -12,9 +12,9 @@ namespace Bdiebeak.InputSystemGeneration
             _actionMap = actionMap;
         }
 
-        public string MapName => _actionMap.name;
-        public string InterfaceName => $"I{_actionMap.name}InputActions";
-        public string ClassName => $"{_actionMap.name}MapInputHandler";
+        public string CamaledMapName => _actionMap.name.ToCamelCase();
+        public string InterfaceName => $"I{CamaledMapName}InputActions";
+        public string ClassName => $"{CamaledMapName}MapInputHandler";
         
         public string GenerateInterfaceCode()
         {
@@ -45,7 +45,7 @@ namespace Bdiebeak.InputSystemGeneration
                 var suitableType = action.ConvertToSuitableType();
                 if (string.IsNullOrEmpty(suitableType)) continue;
                     
-                actions.Add(action.name, suitableType);
+                actions.Add(action.name.ToCamelCase(), suitableType);
             }
 
             return actions;

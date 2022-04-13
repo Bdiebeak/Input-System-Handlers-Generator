@@ -22,15 +22,16 @@ namespace Bdiebeak.InputSystemGeneration
             Write(ToStringHelper.ToStringWithCulture(className));
             Write(" : ");
             Write(ToStringHelper.ToStringWithCulture(baseClassName));
-            Write(" \r\n{\r\n");
+            Write("\r\n{");
 
             foreach (var action in actions)
             {
-                Write("    private void On");
+                Write("\r\n");
+                Write("\tprivate void On");
                 Write(ToStringHelper.ToStringWithCulture(action.Key));
                 Write("(InputValue value)\r\n    {\r\n");
             
-                Write("        ");
+                Write("\t\t");
                 Write(ToStringHelper.ToStringWithCulture(action.Key));
                 Write("Value");
                 
@@ -45,24 +46,11 @@ namespace Bdiebeak.InputSystemGeneration
                     Write(">();\r\n");
                 }
                 
-                Write("    }\r\n");
+                Write("\t}\r\n");
             }
             
             Write("}\r\n");
             return GenerationEnvironment.ToString();
-        }
-
-        private string _classNameField;
-        
-        /// <summary>
-        /// Access the className parameter of the template.
-        /// </summary>
-        private string className
-        {
-            get
-            {
-                return _classNameField;
-            }
         }
         
         private string _baseClassNameField;
@@ -75,6 +63,19 @@ namespace Bdiebeak.InputSystemGeneration
             get
             {
                 return _baseClassNameField;
+            }
+        }
+
+        private string _classNameField;
+        
+        /// <summary>
+        /// Access the className parameter of the template.
+        /// </summary>
+        private string className
+        {
+            get
+            {
+                return _classNameField;
             }
         }
         
@@ -104,7 +105,6 @@ namespace Bdiebeak.InputSystemGeneration
                     _classNameField = (string)Session["className"];
                     classNameValueAcquired = true;
                 }
-                
                 if (classNameValueAcquired == false)
                 {
                     var data = CallContext.LogicalGetData("className");
@@ -120,7 +120,6 @@ namespace Bdiebeak.InputSystemGeneration
                     _baseClassNameField = (string)Session["baseClassName"];
                     baseClassNameValueAcquired = true;
                 }
-                
                 if (baseClassNameValueAcquired == false)
                 {
                     var data = CallContext.LogicalGetData("baseClassName");
@@ -136,7 +135,6 @@ namespace Bdiebeak.InputSystemGeneration
                     _actionsField = (Dictionary<string, string>)Session["actions"];
                     actionsValueAcquired = true;
                 }
-                
                 if (actionsValueAcquired == false)
                 {
                     var data = CallContext.LogicalGetData("actions");

@@ -1,15 +1,15 @@
 using UnityEngine;
 
-[RequireComponent(typeof(IPlayerInputActions))]
+[RequireComponent(typeof(PlayerInputActions))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
-    private IPlayerInputActions _playerInput;
+    private PlayerInputActions _playerInput;
 
     private void Awake() => InitializeComponents();
     private void InitializeComponents()
     {
-        _playerInput = GetComponent<IPlayerInputActions>();
+        _playerInput = GetComponent<PlayerInputActions>();
     }
 
     private void Update() => HandleMovement();

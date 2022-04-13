@@ -32,7 +32,7 @@ namespace Bdiebeak.InputSystemGeneration
 
             foreach (var action in actions)
             {
-                    Write("    public ");
+                    Write("\tpublic ");
                     Write(ToStringHelper.ToStringWithCulture(action.Value));
                     
                     Write(" ");

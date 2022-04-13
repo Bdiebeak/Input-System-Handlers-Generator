@@ -21,17 +21,22 @@ namespace Bdiebeak.InputSystemGeneration
                 return;
             }
 
+            // ToDo: add warning tab if file already exists.
             var selectedFolderPath = EditorUtility.OpenFolderPanel("Save location", $"{Application.dataPath}", "");
             if (string.IsNullOrEmpty(selectedFolderPath)) return;
             
             foreach (var map in inputActionAsset.actionMaps)
             {
                 var generator = new InputHandlersGenerator(map);
-                var interfaceCode = generator.GenerateInterfaceCode();
-                var classCode = generator.GenerateHandlerClassCode();
+                var interfaceCode = generator.GenerateBaseClassCode();
+                var enumCode = generator.GenerateActionsEnumCode();
+                var actionsReaderCode = generator.GenerateInputActionsReaderCode();
+                var messagesHandlerCode = generator.GenerateMessageHandlerCode();
                 
-                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.BaseClassName}.cs", interfaceCode);       
-                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.ClassName}.cs", classCode);       
+                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.BaseClassName}.cs", interfaceCode);     
+                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.EnumName}.cs", enumCode);
+                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.ActionsReaderClassName}.cs", actionsReaderCode);
+                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.MessagesHandlerClassName}.cs", messagesHandlerCode);
             }
 
             AssetDatabase.Refresh();

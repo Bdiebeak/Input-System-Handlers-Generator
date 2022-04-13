@@ -13,13 +13,13 @@ namespace Bdiebeak.InputSystemGeneration
         }
 
         public string CamaledMapName => _actionMap.name.ToCamelCase();
-        public string InterfaceName => $"I{CamaledMapName}InputActions";
+        public string BaseClassName => $"{CamaledMapName}InputActions";
         public string ClassName => $"{CamaledMapName}MapInputHandler";
         
         public string GenerateInterfaceCode()
         {
-            var generator = new InputSystemInterfaceTemplate { Session = new Dictionary<string, object>() };
-            generator.Session["interfaceName"] = InterfaceName;
+            var generator = new InputHandlerBaseClassTemplate { Session = new Dictionary<string, object>() };
+            generator.Session["baseClassName"] = BaseClassName;
             generator.Session["actions"] = GenerateActionsDictionary();
             generator.Initialize();
 
@@ -28,8 +28,8 @@ namespace Bdiebeak.InputSystemGeneration
         
         public string GenerateHandlerClassCode()
         {
-            var generator = new InputHandlerClassTemplate { Session = new Dictionary<string, object>() };
-            generator.Session["interfaceName"] = InterfaceName;
+            var generator = new InputMessagesHandlerTemplate { Session = new Dictionary<string, object>() };
+            generator.Session["baseClassName"] = BaseClassName;
             generator.Session["className"] = ClassName;
             generator.Session["actions"] = GenerateActionsDictionary();
             generator.Initialize();

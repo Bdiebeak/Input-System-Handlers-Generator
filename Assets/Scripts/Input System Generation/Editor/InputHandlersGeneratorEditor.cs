@@ -21,14 +21,16 @@ namespace Bdiebeak.InputSystemGeneration
                 return;
             }
 
-            var selectedFolderPath = EditorUtility.OpenFolderPanel("Save location", "InputSystemInterface", "");
+            var selectedFolderPath = EditorUtility.OpenFolderPanel("Save location", $"{Application.dataPath}", "");
+            if (string.IsNullOrEmpty(selectedFolderPath)) return;
+            
             foreach (var map in inputActionAsset.actionMaps)
             {
                 var generator = new InputHandlersGenerator(map);
                 var interfaceCode = generator.GenerateInterfaceCode();
                 var classCode = generator.GenerateHandlerClassCode();
                 
-                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.InterfaceName}.cs", interfaceCode);       
+                FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.BaseClassName}.cs", interfaceCode);       
                 FileWriter.CreateAndWrite($"{selectedFolderPath}/{map.name}", $"{generator.ClassName}.cs", classCode);       
             }
 

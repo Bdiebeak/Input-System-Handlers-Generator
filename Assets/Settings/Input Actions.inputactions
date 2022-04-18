@@ -1,5 +1,5 @@
 {
-    "name": "TestInputActions",
+    "name": "Input Actions",
     "maps": [
         {
             "name": "Player",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sprint",
+                    "name": "Is Sprinting",
                     "type": "Button",
                     "id": "899879ee-a9c2-4c34-98a2-25143735cf75",
                     "expectedControlType": "Button",
@@ -127,7 +127,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sprint",
+                    "action": "Is Sprinting",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -16,5 +16,5 @@ public abstract class PlayerInputActions : MonoBehaviour
 	public Vector2 MovementValue { get; protected set; }
 	public Vector2 LookValue { get; protected set; }
 	public bool JumpValue { get; protected set; }
-	public bool SprintValue { get; protected set; }
+	public bool IsSprintingValue { get; protected set; }
 }

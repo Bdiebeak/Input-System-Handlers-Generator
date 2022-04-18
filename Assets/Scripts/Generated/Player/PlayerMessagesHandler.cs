@@ -28,8 +28,8 @@ public class PlayerMessagesHandler : PlayerInputActions
 		JumpValue = value.isPressed;
 	}
 
-	private void OnSprint(InputValue value)
+	private void OnIsSprinting(InputValue value)
     {
-		SprintValue = value.isPressed;
+		IsSprintingValue = value.isPressed;
 	}
 }
